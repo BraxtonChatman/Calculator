@@ -1,0 +1,45 @@
+.calculatorContainer {
+    border: solid black 3px;
+    background-color: rgb(31, 31, 63);
+    width: 230px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 30px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.numButton, .opButton {
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+
+.numButton {
+    background-color: rgb(166, 164, 164);
+}
+
+.opButton {
+    background-color: rgb(46, 46, 113);
+}
+
+#row2 {
+    padding-left: 180px;
+}
+
+#calculatorScreen {
+    width: 225px;
+    height: 30px;
+    font-size: 25px;
+}
+
+#clearButton {
+    width: 50px;
+    background-color: rgb(234, 72, 72);
+    color: white;
+}
