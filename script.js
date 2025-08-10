@@ -38,6 +38,14 @@ function clearScreenClickListener() {
 }
 
 function numClickListener(event) {
+    if(equalsLast){
+        equalsLast = false;
+        operand1 = "";
+        operator = "";
+        operand2 = "";
+        calcResult = "";
+        calculatorScreen.value = "";
+    }
     let num = event.target.id.at(-1);
     if(operator !== ""){
         if (operand2 === ""){
@@ -60,8 +68,9 @@ function decimalClickListener(){
 }
 
 function equalsClickListener(){
-   operate();
-   equalsLast = true;
+    if(operator === "" && operand2 === "") return;
+    operate();
+    equalsLast = true;
 }
 
 function operatorClickListener(event){
@@ -95,7 +104,10 @@ function operate(){
             break;
     }
 
-    calculatorScreen.value = calcResult;
+    calculatorScreen.value = calcResult
+    if(calcResult.toString().length > 12){
+        calculatorScreen.value = calcResult.toFixed(12);
+    }
     operand1 = calcResult;
     calcResult = "";
 }
