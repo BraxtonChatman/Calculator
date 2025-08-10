@@ -14,7 +14,7 @@
     gap: 10px;
 }
 
-.numButton, .opButton {
+.numButton, .opButton, #equalsButton {
     width: 50px;
     height: 50px;
     color: white;
@@ -24,7 +24,7 @@
     background-color: rgb(166, 164, 164);
 }
 
-.opButton {
+.opButton, #equalsButton {
     background-color: rgb(46, 46, 113);
 }
 

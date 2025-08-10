@@ -1,16 +1,117 @@
+let operand1 = "";
+let operand2 = "";
+let operator = "";
+let calcResult = "";
+let equalsLast = false;
 
-let calculatorContainer = document.querySelector("#calculatorContainer");
+// Fetch Buttons from DOM
+let calculatorContainer = document.querySelector(".calculatorContainer");
 let calculatorScreen = document.querySelector("#calculatorScreen");
-let clearScreenButton = document.createElement("button");
+calculatorScreen.value = "0";
+let clearButton = document.querySelector("#clearButton");
 let numButtons = [];
 for(let i=0; i<10; i++){
-    let newNumButton = document.createElement("button");
-    numButtons.push(newNumButton);
+    let numButtonId = "#numButton" + i;
+    let numButton = document.querySelector(numButtonId);
+    numButton.addEventListener("click", numClickListener);
+    numButtons.push(numButton);
 }
-let decimalButton = document.createElement("button");
+let decimalButton = document.querySelector("#decimalButton");
+let equalsButton = document.querySelector("#equalsButton");
+let operatorButtons = document.querySelectorAll(".opButton");
 
-let addButton = document.createElement("button");
-let subtractButton = document.createElement("button");
-let multiplyButton = document.createElement("button");
-let divideButton = document.createElement("button");
-let equalsButton = document.createElement("button");
+// Add Button Listeners
+clearButton.addEventListener("click", clearScreenClickListener);
+decimalButton.addEventListener("click", decimalClickListener);
+equalsButton.addEventListener("click", equalsClickListener);
+operatorButtons.forEach((opButton) => {
+    opButton.addEventListener("click", operatorClickListener);
+})
+
+// Declare Button Listeners
+function clearScreenClickListener() {
+    calculatorScreen.value = "";
+    operand1 = "";
+    operand2 = "";
+    operator = "";
+    calcResult = "";
+}
+
+function numClickListener(event) {
+    let num = event.target.id.at(-1);
+    if(operator !== ""){
+        if (operand2 === ""){
+            calculatorScreen.value = "";
+        }
+        operand2 += num;
+    }
+    else {
+        operand1 += num;
+    }
+    if(calculatorScreen.value === "0") calculatorScreen.value = "";
+    calculatorScreen.value += num;
+}
+
+function decimalClickListener(){
+    if(!calculatorScreen.value.includes(".")){
+        calculatorScreen.value += ".";
+        (operator === "") ? operand1 += "." : operand2 += ".";
+    }
+}
+
+function equalsClickListener(){
+   operate();
+   equalsLast = true;
+}
+
+function operatorClickListener(event){
+    if(operator !== "" && operand2 !== "" && equalsLast === false){
+        operate();
+    }
+    operator = event.target.id;
+    operand2 = ""; 
+    equalsLast = false;
+}
+
+function operate(){
+    if(operand1 === "") operand1 = "0";
+    if(operand2 === "") operand2 = operand1;
+
+    switch(operator){
+        case "divideButton":
+            calcResult = doDivision();
+            break;
+
+        case "multiplyButton":
+            calcResult = doMultiplication();
+            break;
+
+        case "subtractButton":
+            calcResult = doSubtraction();
+            break;
+
+        case "addButton":
+            calcResult = doAddition();
+            break;
+    }
+
+    calculatorScreen.value = calcResult;
+    operand1 = calcResult;
+    calcResult = "";
+}
+
+function doDivision(){
+    return (+operand1) / (+operand2);
+}
+
+function doMultiplication(){
+    return (+operand1) * (+operand2);
+}
+
+function doSubtraction(){
+    return (+operand1) - (+operand2);
+}
+
+function doAddition(){
+    return (+operand1) + (+operand2);
+}
